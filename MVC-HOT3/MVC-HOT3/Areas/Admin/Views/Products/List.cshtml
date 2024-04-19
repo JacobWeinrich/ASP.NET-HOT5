@@ -1,0 +1,49 @@
+﻿@model List<Phone>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Products (Admin)";
+}
+
+<h1>List of Products (Phones) (Admin)</h1>
+
+<div class="bg-info text-center">
+    <span class="text-white fs-2">
+        @ViewData["TempMessage"]
+    </span>
+</div>
+
+<a asp-controller="Products" asp-action="Add" asp-area="Admin" class="btn btn-primary">Add Product</a>
+
+<div class="row">
+    @foreach (var phone in Model)
+    {
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header">
+                    <img src="~/Images/@phone.PhoneImageName" class="img-fluid" alt="@phone.PhoneImageName" />
+                </div>
+
+                <div class="card-body mt-0">
+                    <div class="fw-bold">
+                        @phone.PhoneName
+                        <br />
+                        @phone.PhonePrice?.ToString("c")
+                    </div>
+                    @phone.PhoneBrand
+                    @phone.PhoneModel
+                    <br />
+                    @phone.PhoneOs.PhoneOsName
+                    <br />
+                    <a asp-controller="Products" asp-action="Edit" asp-area="Admin" asp-route-slug="@phone.Slug" asp-route-id="@phone.PhoneID" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Products" asp-action="Delete" asp-area="Admin" asp-route-slug="@phone.Slug" asp-route-id="@phone.PhoneID" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+
+
+
+        </div>
+    }
+</div>
+
+

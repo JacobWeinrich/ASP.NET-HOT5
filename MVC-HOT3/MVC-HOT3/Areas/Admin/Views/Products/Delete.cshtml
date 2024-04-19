@@ -1,0 +1,37 @@
+﻿@model Phone
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Products (Admin)";
+}
+
+<h1>Delete Phone</h1>
+<hr />
+<h2>Are you sure you want to delete this phone?</h2>
+<form asp-action="Delete" method="post">
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header">
+                    <img src="~/Images/@Model.PhoneImageName" class="img-fluid" alt="@Model.PhoneImageName" />
+                </div>
+
+                <div class="card-body mt-0">
+                    <div class="fw-bold">
+                        @Model.PhoneName
+                        <br />
+                        @Model.PhonePrice?.ToString("c")
+                    </div>
+                    @Model.PhoneBrand
+                    @Model.PhoneModel
+                    <br />
+                    @Model.PhoneOs.PhoneOsName
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="hidden" asp-for="@Model.PhoneID"  />
+                <button type="submit" class="btn btn-danger">Confirm Deltetion</button>
+            </div>
+        </div>
+    </div>
+</form>
+

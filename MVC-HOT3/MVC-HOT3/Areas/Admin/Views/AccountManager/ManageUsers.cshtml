@@ -1,0 +1,52 @@
+﻿@model UserViewModel
+<h1 class="mb-2">Manage Users</h1>
+<h5 class="mt-2"><a asp-action="Register" asp-controller="Account" asp-area="">Add a User</a></h5>
+
+<table class="table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Roles</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Users.Count() == 0)
+        {
+            <tr><td colspan="5">There are no user accounts.</td></tr>
+        }
+        else
+        {
+            @foreach (User user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        @foreach (string roleName in user.RoleNames)
+                        {
+                            <div>@roleName</div>
+                        }
+                    </td>
+                    <td>
+                        <form method="post" asp-action="Delete" asp-route-id="@user.Id"><button type="submit" class="btn btn-danger">Delete User</button></form>
+                    </td>
+
+                    <td>
+                        @if (!user.RoleNames.Contains("Admin"))
+                        {
+                            <form method="post" asp-action="AddToAdmin" asp-route-id="@user.Id"><button type="submit" class="btn btn-primary">Add To Admin</button></form>
+                        }
+                    </td>
+                    <td>
+                        @if (user.RoleNames.Contains("Admin"))
+                        {
+                            <form method="post" asp-action="RemoveFromAdmin" asp-route-id="@user.Id"><button type="submit" class="btn btn-primary">Remove from Admin</button></form>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

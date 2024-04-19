@@ -1,0 +1,50 @@
+﻿@model CartViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "View Cart";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>SubTotal</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.Phone.PhoneName</td>
+                <td>@item.Phone.PhoneModel</td>
+                <td>@item.Phone.PhoneBrand</td>
+                <td>@item.Phone.PhonePrice</td>
+                <td>@item.Quantity</td>
+                <td>@((item.Phone.PhonePrice * item.Quantity)?.ToString("C"))</td>
+                <input type="hidden" asp-for="@item.Phone.PhoneID" />
+                <td>
+                    <a asp-action="RemoveItem" asp-controller="ShoppingCart" asp-route-id="@item.Phone.PhoneID">Remove</a>
+                </td>
+            </tr>
+        }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="fw-bold">Total:</td>
+        <td class="fw-semibold">@Model.CartTotal?.ToString("C")</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<form asp-action="PurchaseItems" method="post">
+    <button class="btn btn-primary" type="submit">Purchase</button>
+</form>

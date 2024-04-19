@@ -1,0 +1,54 @@
+﻿@{
+    string c = ViewContext.RouteData.Values["controller"].ToString() ?? "";
+    string a = ViewContext.RouteData.Values["action"].ToString() ?? "";
+    string area = ViewContext.RouteData.Values["area"].ToString() ?? "";
+}
+@RenderSection("scripts", required: false)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-warning-subtle ">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home" asp-area="Admin">Tech Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link @(area == "Admin" && c=="Home" && a == "Index" ? "active" : "")" aria-current="page" asp-action="Index" asp-controller="Home" asp-area="Admin">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(area == "Admin" && c=="Products" && a == "List" ? "active" : "") " aria-current="page" asp-action="Index" asp-controller="Products" asp-area="Admin">Products (Admin)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(area == "Admin" && c=="AccountManager" && a == "ManageUsers" ? "active" : "") " aria-current="page" asp-action="ManageUsers" asp-controller="AccountManager" asp-area="Admin">Manage Users</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <ul class="navbar-nav fw-bold">
+                        <li class="nav-item">
+                            <span class="text-dark nav-link">Welcome: @User.FindFirst("FirstName")!.Value @User.FindFirst("LastName")!.Value</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="">User View</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+

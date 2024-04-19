@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> signInManager
+@{
+    string c = ViewContext.RouteData.Values["controller"].ToString() ?? "";
+    string a = ViewContext.RouteData.Values["action"].ToString() ?? "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark-subtle ">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home" asp-area="">Tech Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link @(c=="Home" && a == "Index" ? "active" : "")" aria-current="page" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(c=="Products" && a == "List" ? "active" : "") " aria-current="page" asp-action="Index" asp-controller="Products" asp-area="">Products</a>
+                    </li>
+
+                </ul>
+                <div class="d-flex">
+                    <ul class="navbar-nav fw-bold">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item @(c == "Account" & a == "Logout" ? "active" : "") align-items-baseline">
+                                <form asp-action="Logout" asp-controller="Account" method="post" asp-area="">
+                                    <input type="submit" value="Log Out" class="btn fw-bold btn-outline-success" />
+                                </form>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <button class="nav-link dropdown-toggle show" type="button" id="navbarAccountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Welcome: @User.FindFirst("FirstName")!.Value @User.FindFirst("LastName")!.Value
+                                </button>
+                                <ul class="dropdown-menu show" aria-labelledby="navbarAccountDropdown">
+                                    <li><a class="dropdown-item " asp-controller="Account" asp-action="ChangePassword" asp-area="">Change Password</a></li>
+                                </ul>
+                            </li>
+                            @*<li>
+                                <a asp-controller="Account" asp-action="ChangePassword" asp-area="" class="nav-link">Welcome: @User.FindFirst("FirstName")!.Value @User.FindFirst("LastName")!.Value</a>
+                            </li>*@
+                        }
+                        else
+                        {
+                            <li class="nav-item @(c == "Account" & a == "Login" ? "active" : "")">
+                                <a class="btn btn-outline-success fw-bold" asp-controller="Account" asp-action="Login" asp-area="">Login</a>
+                            </li>
+                            <li class="nav-item @(c == "Account" & a == "Register" ? "active" : "")">
+                                <a class="nav-link " asp-controller="Account" asp-action="Register" asp-area="">Register</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link @(c=="ShoppingCart" && a == "ViewCart" ? "active" : "") text-primary" asp-action="ViewCart" asp-controller="ShoppingCart" asp-area="">View Cart</a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="Admin">Admin View</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/js/site.js"></script>*@
+</body>
+</html>

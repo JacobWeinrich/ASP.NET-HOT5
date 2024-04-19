@@ -1,0 +1,44 @@
+﻿@model MVC_HOT3.Areas.Admin.Views.Models.EditAddViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Products (Admin)";
+}
+@section scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h1>@ViewBag.Action</h1>
+<hr />
+<form asp-action="AddEdit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <label asp-for="Phone.PhoneName">Phone Name:</label>
+    <input asp-for="Phone.PhoneName" class="form-control" />
+
+    <label asp-for="Phone.PhoneImageName">Phone Image</label>
+    <input asp-for="Phone.PhoneImageName" class="form-control" />
+
+    <label asp-for="Phone.PhoneBrand">Phone Brand:</label>
+    <input asp-for="Phone.PhoneBrand" class="form-control" />
+
+    <label asp-for="Phone.PhoneModel">Phone Model:</label>
+    <input asp-for="Phone.PhoneModel" class="form-control" />
+
+    <label asp-for="Phone.PhonePrice">Phone Price:</label>
+    <input asp-for="Phone.PhonePrice" class="form-control" />
+
+    <label asp-for="Phone.PhoneOsID" class="form-label fw-semibold">Phone Os</label>
+    <select asp-for="Phone.PhoneOsID" class="form-select border-secondary">
+        <option valuePhone.="" disabled>-- Select Phone Os --</option>
+        @foreach (var PhoneOs in Model.PhoneOSs)
+        {
+            <option selected=@Model.CheckActivePhoneOs(PhoneOs.PhoneOsID) value="@PhoneOs.PhoneOsID">@PhoneOs.PhoneOsName</option>
+        }
+    </select>
+
+    <input type="hidden" asp-for="@Model.Phone.PhoneID" />
+    <button type="submit" class="btn btn-primary">@(ViewBag.Action == "Add" ? "Add" : "Save")</button>
+
+</form>
