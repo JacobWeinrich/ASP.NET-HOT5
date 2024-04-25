@@ -34,7 +34,7 @@
                 <div class="d-flex">
                     <ul class="navbar-nav fw-bold">
                         <li class="nav-item">
-                            <span class="text-dark nav-link">Welcome: @User.FindFirst("FirstName")!.Value @User.FindFirst("LastName")!.Value</span>
+                            <span class="text-dark nav-link">Welcome: @User.Identity.Name</span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="">User View</a>

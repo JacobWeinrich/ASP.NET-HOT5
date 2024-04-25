@@ -39,7 +39,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <button class="nav-link dropdown-toggle show" type="button" id="navbarAccountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Welcome: @User.FindFirst("FirstName")!.Value @User.FindFirst("LastName")!.Value
+                                    Welcome: @User.Identity.Name
                                 </button>
                                 <ul class="dropdown-menu show" aria-labelledby="navbarAccountDropdown">
                                     <li><a class="dropdown-item " asp-controller="Account" asp-action="ChangePassword" asp-area="">Change Password</a></li>
